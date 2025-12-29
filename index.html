@@ -1,191 +1,481 @@
-import React, { useState } from 'react';
-import { Phone, CheckCircle, Target, Users, BookOpen, Award, MessageCircle, ArrowRight, Star } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Preparation - Land Your Dream Job</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-export default function InterviewPrepLanding() {
-  const [hoveredService, setHoveredService] = useState(null);
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
 
-  const services = [
-    {
-      icon: <Target className="w-8 h-8" />,
-      title: "Mock Interviews",
-      description: "Practice with real interview scenarios and get expert feedback"
-    },
-    {
-      icon: <BookOpen className="w-8 h-8" />,
-      title: "Resume Building",
-      description: "Create ATS-friendly resumes that get you shortlisted"
-    },
-    {
-      icon: <Users className="w-8 h-8" />,
-      title: "Career Consulting",
-      description: "One-on-one guidance for your career growth and job search"
-    },
-    {
-      icon: <Award className="w-8 h-8" />,
-      title: "Skill Development",
-      description: "Master the skills employers are looking for"
-    }
-  ];
+        .gradient-bg {
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #faf5ff 100%);
+            min-height: 100vh;
+        }
 
-  const benefits = [
-    "Personalized interview preparation",
-    "Industry-specific guidance",
-    "Proven success strategies",
-    "24/7 support and consultation",
-    "Job search assistance",
-    "Salary negotiation tips"
-  ];
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            padding: 4rem 1rem;
+        }
 
-  const testimonials = [
-    { name: "Rahul M.", role: "Software Engineer", text: "Got placed in top MNC within 2 weeks!" },
-    { name: "Priya S.", role: "Software Engineer", text: "The mock interviews boosted my confidence!" },
-    { name: "Amit K.", role: "Software Engineer", text: "Best career decision I made!" }
-  ];
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%);
+            opacity: 0.1;
+        }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-10"></div>
-        <div className="max-w-6xl mx-auto px-4 py-16 relative">
-          <div className="text-center space-y-6">
-            <div className="inline-block animate-pulse">
-              <span className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                🎯 Your Dream Job Awaits
-              </span>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .phone-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #6b7280;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 600px;
+            margin: 2rem auto 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+        }
+
+        .services-section {
+            padding: 4rem 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #2563eb;
+        }
+
+        .service-icon {
+            color: #2563eb;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-description {
+            color: #6b7280;
+        }
+
+        .benefits-section {
+            background: linear-gradient(90deg, #2563eb 0%, #9333ea 100%);
+            padding: 4rem 1rem;
+            color: white;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+
+        .testimonials-section {
+            padding: 4rem 1rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .star {
+            color: #facc15;
+            font-size: 1.25rem;
+        }
+
+        .testimonial-text {
+            color: #374151;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .testimonial-role {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .final-cta-section {
+            background: linear-gradient(90deg, #111827 0%, #1f2937 100%);
+            padding: 4rem 1rem;
+            text-align: center;
+            color: white;
+        }
+
+        .final-cta-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .final-cta-subtitle {
+            font-size: 1.25rem;
+            color: #d1d5db;
+            margin-bottom: 2rem;
+        }
+
+        .final-cta-note {
+            margin-top: 1.5rem;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title,
+            .final-cta-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="text-center">
+                    <div class="badge">
+                        🎯 Your Dream Job Awaits
+                    </div>
+                    
+                    <h1>
+                        Crack Any Interview<br>
+                        <span class="gradient-text">Land Your Dream Job</span>
+                    </h1>
+                    
+                    <p class="subtitle">
+                        Expert guidance, proven strategies, and personalized consulting to help you succeed in every interview
+                    </p>
+
+                    <div>
+                        <a href="https://wa.me/918340238856" target="_blank" class="cta-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Connect on WhatsApp Now
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12h14M12 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                        
+                        <div class="phone-number">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span>+91 83402 38856</span>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: #9333ea;">100%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" style="color: #2563eb;">Expert Guidance</div>
+                            <div class="stat-label">Personalized Support</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-              Crack Any Interview<br />
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Land Your Dream Job
-              </span>
-            </h1>
-            
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Expert guidance, proven strategies, and personalized consulting to help you succeed in every interview
-            </p>
+        </div>
 
-            {/* CTA Button */}
-            <div className="flex flex-col items-center gap-4 pt-4">
-              <a 
-                href="https://wa.me/918340238856"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-3"
-              >
-                <MessageCircle className="w-6 h-6" />
-                Connect on WhatsApp Now
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-              
-              <div className="flex items-center gap-2 text-gray-600">
-                <Phone className="w-5 h-5 text-green-600" />
-                <span className="font-semibold text-lg">+91 83402 38856</span>
-              </div>
+        <!-- Services Section -->
+        <div class="services-section">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🎯</div>
+                        <h3 class="service-title">Mock Interviews</h3>
+                        <p class="service-description">Practice with real interview scenarios and get expert feedback</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📖</div>
+                        <h3 class="service-title">Resume Building</h3>
+                        <p class="service-description">Create ATS-friendly resumes that get you shortlisted</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">👥</div>
+                        <h3 class="service-title">Career Consulting</h3>
+                        <p class="service-description">One-on-one guidance for your career growth and job search</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏆</div>
+                        <h3 class="service-title">Skill Development</h3>
+                        <p class="service-description">Master the skills employers are looking for</p>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-8 pt-8 max-w-2xl mx-auto">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600">100%</div>
-                <div className="text-gray-600">Success Rate</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">Expert Guidance</div>
-                <div className="text-gray-600">Personalized Support</div>
-              </div>
+        <!-- Benefits Section -->
+        <div class="benefits-section">
+            <div class="container">
+                <h2 class="section-title">Why Choose Us?</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <span style="font-size: 1.5rem;">✓</span>
+                        <span>Personalized interview preparation</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span style="font-size: 1.5rem;">✓</span>
+                        <span>Industry-specific guidance</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span style="font-size: 1.5rem;">✓</span>
+                        <span>Proven success strategies</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span style="font-size: 1.5rem;">✓</span>
+                        <span>24/7 support and consultation</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span style="font-size: 1.5rem;">✓</span>
+                        <span>Job search assistance</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span style="font-size: 1.5rem;">✓</span>
+                        <span>Salary negotiation tips</span>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
 
-      {/* Services Section */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">
-          Our Services
-        </h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              onMouseEnter={() => setHoveredService(index)}
-              onMouseLeave={() => setHoveredService(null)}
-              className={`p-8 bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 cursor-pointer border-2 ${
-                hoveredService === index ? 'border-blue-500' : 'border-transparent'
-              }`}
-            >
-              <div className="text-blue-600 mb-4">{service.icon}</div>
-              <h3 className="text-2xl font-bold mb-3 text-gray-900">{service.title}</h3>
-              <p className="text-gray-600">{service.description}</p>
+        <!-- Testimonials Section -->
+        <div class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">Success Stories</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="testimonial-text">"Got placed in top MNC within 2 weeks!"</p>
+                        <div>
+                            <div class="testimonial-name">Rahul M.</div>
+                            <div class="testimonial-role">Software Engineer</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="testimonial-text">"The mock interviews boosted my confidence!"</p>
+                        <div>
+                            <div class="testimonial-name">Priya S.</div>
+                            <div class="testimonial-role">Software Engineer</div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                        </div>
+                        <p class="testimonial-text">"Best career decision I made!"</p>
+                        <div>
+                            <div class="testimonial-name">Amit K.</div>
+                            <div class="testimonial-role">Software Engineer</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          ))}
         </div>
-      </div>
 
-      {/* Benefits Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-white">
-            Why Choose Us?
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start gap-3 bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                <CheckCircle className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
-                <span className="text-white text-lg">{benefit}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Testimonials */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">
-          Success Stories
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
-              <div className="flex gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
-              <div>
-                <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                <div className="text-sm text-gray-600">{testimonial.role}</div>
-              </div>
+        <!-- Final CTA Section -->
+        <div class="final-cta-section">
+            <div class="container">
+                <h2 class="final-cta-title">Ready to Transform Your Career?</h2>
+                <p class="final-cta-subtitle">
+                    Don't let another opportunity pass by. Start your journey to success today!
+                </p>
+                <a href="https://wa.me/918340238856" target="_blank" class="cta-button">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    Get Started Now
+                </a>
+                <div class="final-cta-note">
+                    <p>Available for consultation 24/7</p>
+                </div>
             </div>
-          ))}
         </div>
-      </div>
-
-      {/* Final CTA */}
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Career?
-          </h2>
-          <p className="text-xl text-gray-300 mb-8">
-            Don't let another opportunity pass by. Start your journey to success today!
-          </p>
-          <a 
-            href="https://wa.me/918340238856"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-green-500 text-white px-10 py-5 rounded-full text-xl font-semibold hover:bg-green-600 transform hover:scale-105 transition-all duration-300 shadow-xl"
-          >
-            <MessageCircle className="w-7 h-7" />
-            Get Started Now
-          </a>
-          <div className="mt-6 text-gray-400">
-            <p>Available for consultation 24/7</p>
-          </div>
-        </div>
-      </div>
     </div>
-  );
-}
+</body>
+</html>
